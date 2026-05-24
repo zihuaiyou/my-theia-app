@@ -3,6 +3,7 @@ import { bindViewContribution, createTreeContainer, LabelProviderContribution, W
 import { Container, ContainerModule, interfaces } from '@theia/core/shared/inversify';
 import { TreeviewExampleDecorationService, TreeviewExampleDecorator } from './decorator/treeview-example-decoration-service';
 import { TreeviewExampleDemoDecorator } from './decorator/treeview-example-demo-decorator';
+import { TreeviewExamplePriorityDecorator } from './decorator/treeview-example-priority-decorator';
 import { TreeViewExampleLabelProvider } from './treeview-example-label-provider';
 import { TreeViewExampleModel } from './treeview-example-model';
 import { TreeviewExampleTree } from './treeview-example-tree';
@@ -27,6 +28,10 @@ export default new ContainerModule(bind => {
 
     bind(TreeviewExampleDemoDecorator).toSelf().inSingletonScope();
     bind(TreeviewExampleDecorator).toService(TreeviewExampleDemoDecorator);
+
+    // 注册新的优先级装饰器
+    bind(TreeviewExamplePriorityDecorator).toSelf().inSingletonScope();
+    bind(TreeviewExampleDecorator).toService(TreeviewExamplePriorityDecorator);
 });
 
 /**
