@@ -24,7 +24,7 @@ export class TreeviewExampleViewContribution extends AbstractViewContribution<Tr
         super({
             widgetId: TreeViewExampleWidget.ID,
             widgetName: TreeViewExampleWidget.LABEL,
-            defaultWidgetOptions: { area: 'right' },
+            defaultWidgetOptions: { area: 'left'},
             toggleCommandId: OpenTreeviewExampleView.id
         });
     }
