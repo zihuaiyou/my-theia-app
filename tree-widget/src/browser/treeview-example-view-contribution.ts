@@ -30,8 +30,6 @@ export class TreeviewExampleViewContribution extends AbstractViewContribution<Tr
     }
     override registerCommands(commands: CommandRegistry): void {
         super.registerCommands(commands);
-        debugger
-        console.log('@@@',123);
         
         // register the "Add child item" command
         commands.registerCommand(TreeviewExampleTreeAddItem, {
