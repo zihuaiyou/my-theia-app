@@ -18,8 +18,9 @@
   "scripts": {
     "prepare": "npm run clean && npm run build",
     "clean": "rimraf lib",
-    "build": "tsc",
-    "watch": "tsc -w"
+    "build": "tsc && npm run copy:styles",
+    "watch": "tsc -w",
+    "copy:styles": "xcopy \"src\\browser\\styles\" \"lib\\browser\\styles\" /s /i /y"
   },
   "theiaExtensions": [
     {

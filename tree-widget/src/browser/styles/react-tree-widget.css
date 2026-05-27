@@ -1,0 +1,288 @@
+/* React Tree Widget 样式 */
+
+.react-tree-widget-container {
+    height: 100%;
+    overflow: hidden;
+    background: var(--theia-layout-color0);
+}
+
+.react-tree-widget {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 12px;
+    box-sizing: border-box;
+}
+
+.tree-header {
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--theia-border-color);
+}
+
+.tree-header h3 {
+    margin: 0 0 6px 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--theia-editor-foreground);
+    letter-spacing: 0.2px;
+}
+
+.tree-header p {
+    margin: 0;
+    font-size: 12px;
+    color: var(--theia-descriptionForeground);
+}
+
+.tree-container {
+    flex: 1;
+    overflow-y: auto;
+    border-radius: 8px;
+    background: var(--theia-layout-color1);
+    padding: 4px;
+}
+
+.tree-container::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+.tree-container::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.tree-container::-webkit-scrollbar-thumb {
+    background: var(--theia-scrollbarSlider-background);
+    border-radius: 3px;
+}
+
+.tree-container::-webkit-scrollbar-thumb:hover {
+    background: var(--theia-scrollbarSlider-hoverBackground);
+}
+
+.react-tree-node {
+    display: flex;
+    align-items: center;
+    padding: 6px 8px;
+    margin: 2px 4px;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: all 0.15s ease-in-out;
+    user-select: none;
+    position: relative;
+}
+
+.react-tree-node:hover {
+    background-color: var(--theia-list-hoverBackground);
+    transform: translateX(2px);
+}
+
+.react-tree-node.selected {
+    background-color: var(--theia-list-activeSelectionBackground);
+    color: var(--theia-list-activeSelectionForeground);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+
+.react-tree-node.selected:hover {
+    background-color: var(--theia-list-activeSelectionBackground);
+    transform: translateX(0);
+}
+
+.expand-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    margin-right: 4px;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    color: var(--theia-icon-foreground);
+}
+
+.expand-icon:hover {
+    background-color: var(--theia-list-hoverBackground);
+}
+
+.expand-icon svg {
+    width: 14px;
+    height: 14px;
+    transition: transform 0.2s ease;
+}
+
+.expand-icon.expanded svg {
+    transform: rotate(90deg);
+}
+
+.expand-icon-placeholder {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    margin-right: 4px;
+}
+
+.node-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    margin-right: 6px;
+    border-radius: 4px;
+}
+
+.node-icon svg {
+    width: 16px;
+    height: 16px;
+}
+
+.node-name {
+    flex: 1;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.1px;
+}
+
+.react-tree-node.selected .node-name {
+    font-weight: 600;
+}
+
+.node-quantity {
+    margin-left: 10px;
+    font-size: 11px;
+    color: var(--theia-descriptionForeground);
+    background: var(--theia-layout-color2);
+    padding: 2px 6px;
+    border-radius: 10px;
+}
+
+.node-children {
+    margin-left: 0;
+    overflow: hidden;
+}
+
+.node-children-transition {
+    animation: expandCollapse 0.2s ease-in-out;
+}
+
+@keyframes expandCollapse {
+    0% {
+        opacity: 0;
+        max-height: 0;
+        transform: translateY(-5px);
+    }
+    100% {
+        opacity: 1;
+        max-height: 2000px;
+        transform: translateY(0);
+    }
+}
+
+.tree-footer {
+    margin-top: 16px;
+    padding-top: 12px;
+    border-top: 1px solid var(--theia-border-color);
+}
+
+.tree-footer p {
+    margin: 0;
+    font-size: 12px;
+    color: var(--theia-descriptionForeground);
+}
+
+/* 右键菜单样式 */
+.context-menu {
+    position: fixed;
+    background: var(--theia-menu-background);
+    border: 1px solid var(--theia-border-color);
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15), 0 2px 6px rgba(0, 0, 0, 0.1);
+    padding: 4px;
+    min-width: 160px;
+    z-index: 1000;
+    animation: menuFadeIn 0.15s ease-out;
+}
+
+@keyframes menuFadeIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.95) translateY(-4px);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.context-menu-item {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    margin: 2px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.12s;
+    font-size: 13px;
+    color: var(--theia-menu-foreground);
+}
+
+.context-menu-item:hover {
+    background-color: var(--theia-menu-selectionBackground);
+    color: var(--theia-menu-selectionForeground);
+}
+
+.context-menu-item svg {
+    width: 14px;
+    height: 14px;
+    margin-right: 8px;
+    flex-shrink: 0;
+}
+
+.context-menu-divider {
+    height: 1px;
+    background: var(--theia-border-color);
+    margin: 4px 0;
+}
+
+/* 工具栏按钮样式 */
+.tree-toolbar {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 12px;
+    padding: 6px;
+    background: var(--theia-layout-color1);
+    border-radius: 8px;
+}
+
+.toolbar-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: transparent;
+    border-radius: 6px;
+    cursor: pointer;
+    color: var(--theia-icon-foreground);
+    transition: all 0.15s;
+}
+
+.toolbar-btn:hover {
+    background: var(--theia-button-hoverBackground);
+    color: var(--theia-button-foreground);
+}
+
+.toolbar-btn:active {
+    transform: scale(0.95);
+}
+
+.toolbar-btn svg {
+    width: 16px;
+    height: 16px;
+}
+
+.toolbar-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}

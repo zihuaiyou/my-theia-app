@@ -1,60 +1,16 @@
-import { bindContributionProvider } from '@theia/core';
-import { bindViewContribution, createTreeContainer, LabelProviderContribution, WidgetFactory } from '@theia/core/lib/browser';
-import { Container, ContainerModule, interfaces } from '@theia/core/shared/inversify';
-import { TreeviewExampleDecorationService, TreeviewExampleDecorator } from './decorator/treeview-example-decoration-service';
-import { TreeviewExampleDemoDecorator } from './decorator/treeview-example-demo-decorator';
-import { TreeviewExamplePriorityDecorator } from './decorator/treeview-example-priority-decorator';
-import { TreeViewExampleLabelProvider } from './treeview-example-label-provider';
-import { TreeViewExampleModel } from './treeview-example-model';
-import { TreeviewExampleTree } from './treeview-example-tree';
-import { TreeviewExampleViewContribution } from './treeview-example-view-contribution';
-import { TREEVIEW_EXAMPLE_CONTEXT_MENU, TreeViewExampleWidget } from './treeview-example-widget';
-import { TreeViewExampleTreeItemFactory } from './treeview-example-tree-item-factory';
+import { ContainerModule } from 'inversify';
+import { ReactTreeWidget } from './react-tree-widget';
+import { bindViewContribution, WidgetFactory } from '@theia/core/lib/browser';
+import { MyViewContribution } from './react-tree-startup-contribution';
 
-/**
- * Frontend contribution bindings.
- */
 export default new ContainerModule(bind => {
-    bindViewContribution(bind, TreeviewExampleViewContribution);
-
+    // 将你的 Widget 绑定到自身，以便后续注入
+    bind(ReactTreeWidget).toSelf();
+    // 注册 Widget 工厂
     bind(WidgetFactory).toDynamicValue(ctx => ({
-        id: TreeViewExampleWidget.ID,
-        createWidget: () => createTreeViewExampleViewContainer(ctx.container).get(TreeViewExampleWidget)
+        id: ReactTreeWidget.ID,
+        createWidget: () => ctx.container.get<ReactTreeWidget>(ReactTreeWidget)
     })).inSingletonScope();
-    
-
-    bind(TreeViewExampleModel).toSelf().inSingletonScope();
-    bind(LabelProviderContribution).to(TreeViewExampleLabelProvider);
-
-    bind(TreeviewExampleDemoDecorator).toSelf().inSingletonScope();
-    bind(TreeviewExampleDecorator).toService(TreeviewExampleDemoDecorator);
-
-    // 注册新的优先级装饰器
-    bind(TreeviewExamplePriorityDecorator).toSelf().inSingletonScope();
-    bind(TreeviewExampleDecorator).toService(TreeviewExamplePriorityDecorator);
+    // 4. 【建议】使用官方提供的辅助方法，自动将 Contribution 绑定到框架的扩展点上
+    bindViewContribution(bind, MyViewContribution);
 });
-
-/**
- * Create the child container which contains the `TreeViewExampleWidget` and all its collaborators
- * in an isolated child container so the bound services affect only the `TreeViewExampleWidget`
- *
- * @param parent the parent container
- * @returns the new child container
- */
-function createTreeViewExampleViewContainer(parent: interfaces.Container): Container {
-    const child = createTreeContainer(parent, {
-        tree: TreeviewExampleTree,
-        model: TreeViewExampleModel,
-        widget: TreeViewExampleWidget,
-        props: {
-            contextMenuPath: TREEVIEW_EXAMPLE_CONTEXT_MENU,
-            multiSelect: true,
-            search: true,
-            expandOnlyOnExpansionToggleClick: false
-        },
-        decoratorService: TreeviewExampleDecorationService,
-    });
-    bindContributionProvider(child, TreeviewExampleDecorator);
-    child.bind(TreeViewExampleTreeItemFactory).toSelf().inSingletonScope();
-    return child;
-}
